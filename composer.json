@@ -18,7 +18,8 @@
     },
     "autoload": {
     	"psr-4": {
-    		"Liquido\\": "app/"
+    		"Liquido\\": "app/",
+            "Liquido\\Model\\": "app/Model"
     	}
     }
 }

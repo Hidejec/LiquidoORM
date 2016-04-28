@@ -2,8 +2,8 @@
 
 namespace Liquido;
 
-class SayHello{
-	public static function world(){
+class App{
+	public function index(){
         return 'Hello World, Composer!';
     }
 }

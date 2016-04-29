@@ -1,7 +1,7 @@
 {
     "name": "hidejec/liquidoORM",
     "type": "library",
-    "description": "Liquido PHP Framework Developed by Team Liquido",
+    "description": "LiquidoORM Framework Developed by Team Liquido(Inspired by Laravel Eloquent ORM)",
     "version": "0.0.1",
     "keywords": ["PHP","Framework"],
     "homepage": "https://github.com/Hidejec/Liquido",

@@ -12,7 +12,12 @@ class LiquidoORM extends DatabaseConnection{
 	public static function set($class) {
         $path = explode('\\', $class);
     	$childClass = strtolower(array_pop($path));
-    	self::$table = $childClass."s";
+    	if(static::$table == ""|| static::$table == null){
+            self::$table = $childClass."s";   
+        }
+        else{
+            self::$table = static::$table;  
+        }
     }
 
     public function json($data){

@@ -4,7 +4,7 @@ LiquidoORM is a simple object relational mapping which helps you query database 
 ## How to Install
 
 ```bash
-composer require hidejec/liquido-orm "0.0.1"
+composer require hidejec/liquido-orm "0.0.2"
 ```
 
 then autoload in your project
@@ -53,6 +53,13 @@ Create a model and extend the LiquidoORM. For example a Customer Model
 The Model automatically set the table with the plural name of the Model so you don't have to write again and again the table you want to run the query. 
 > In our example, The table is set to `customers`. So be sure that you have a table named `customers` inside your database. 
 > Another example: if you have a model class name ``Product``, the table will be set to `products` automatically. 
+
+If you want to specify custom table name, just add this inside your model: 
+```bash
+protected static $table = "tablename";
+```
+_Note that it should be **protected static $table**_ 
+
 
 **Get all result and store it in a variable**
 

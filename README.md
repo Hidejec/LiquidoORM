@@ -58,7 +58,7 @@ If you want to specify custom table name, just add this inside your model:
 ```bash
 protected static $table = "tablename";
 ```
-_Note that it should be **protected static $table**_ 
+##### Note that it should be ```protected static $table```
 
 
 **Get all result and store it in a variable**

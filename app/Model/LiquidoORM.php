@@ -13,10 +13,15 @@ class LiquidoORM extends DatabaseConnection{
         $path = explode('\\', $class);
         $childClass = strtolower(array_pop($path));
         if(static::$table == ""|| static::$table == null){
-            self::$table = $childClass."s";   
+            if (substr($childClass, -1) == 's'){
+                return $childClass."es"; 
+            }
+            else{
+                return $childClass."s";
+            }
         }
         else{
-            self::$table = static::$table;  
+            return static::$table;  
         }
     }
 
@@ -25,12 +30,12 @@ class LiquidoORM extends DatabaseConnection{
     }
 
     public static function all($column = "*"){
-        self::set(get_called_class());
+        $table = self::set(get_called_class());
         $con = parent::$instance;
-        $sql = "SELECT $column FROM `".self::$table."`";
+        $sql = "SELECT $column FROM `".$table."`";
         $query = $con->prepare($sql);
         $query->execute();
-        $list = $query->fetchAll(PDO::FETCH_COLUMN);
+        $list = $query->fetchAll(PDO::FETCH_ASSOC);
         if($list){
             return $list;
         }
@@ -38,12 +43,13 @@ class LiquidoORM extends DatabaseConnection{
             return "Error Processing Request";
         }
         $con = null;
+        $table = null;
     }
 
     public static function withId($id, $column="*"){
-        self::set(get_called_class());
+        $table = self::set(get_called_class());
         $con = parent::$instance;
-        $sql = "SELECT $column FROM `".self::$table."` WHERE id = :id";
+        $sql = "SELECT $column FROM `".$table."` WHERE id = :id";
         $query = $con->prepare($sql);
         $query->bindParam(':id', $id);
         $query->execute();
@@ -55,10 +61,11 @@ class LiquidoORM extends DatabaseConnection{
             return "Error Processing Request";
         }
         $con = null;
+        $table = null;
     }
 
     public static function with($argument, $column="*"){
-        self::set(get_called_class());
+        $table = self::set(get_called_class());
         $con = parent::$instance;
         $where = "";
         $condition = array_keys($argument);
@@ -79,7 +86,7 @@ class LiquidoORM extends DatabaseConnection{
                 $where .= " ".$condition[$x]." = '".$argument[$condition[$x]]."' ";
             }       
         }
-        $sql = "SELECT $column FROM `".self::$table."` WHERE $where";
+        $sql = "SELECT $column FROM `".$table."` WHERE $where";
         $query = $con->prepare($sql);
         $query->execute();
         $list = $query->fetchAll(PDO::FETCH_COLUMN);
@@ -90,13 +97,14 @@ class LiquidoORM extends DatabaseConnection{
             return "Error Processing Request";
         }
         $con = null;
+        $table = null;
     }
 
     public static function where($columnCondition, $condition, $value, $column="*"){
-        self::set(get_called_class());
+        $table = self::set(get_called_class());
         $con = parent::$instance;
         $where = "$columnCondition $condition '$value'";
-        $sql = "SELECT $column FROM `".self::$table."` WHERE $where";
+        $sql = "SELECT $column FROM `".$table."` WHERE $where";
         $query = $con->prepare($sql);
         $query->execute();
         $list = $query->fetch(PDO::FETCH_COLUMN);
@@ -108,10 +116,11 @@ class LiquidoORM extends DatabaseConnection{
         }
 
         $con = null;
+        $table = null;
     }
 
     public static function add($argument){
-        self::set(get_called_class());
+        $table = self::set(get_called_class());
         $con = parent::$instance;
         $condition = array_keys($argument);
         $assignTo = "";
@@ -121,11 +130,11 @@ class LiquidoORM extends DatabaseConnection{
             $assignTo .= ($x < count($condition)-1) ? "$condition[$x]," : "$condition[$x]";
             $assignment .= ($x < count($condition)-1) ? "'$argument[$cond]'," : "'$argument[$cond]'";
         }
-        $sql = "INSERT INTO `".self::$table."`($assignTo) VALUES ($assignment)";    
+        $sql = "INSERT INTO `".$table."`($assignTo) VALUES ($assignment)";  
         $query = $con->prepare($sql);
         $query->execute();
         $last = $con->lastInsertId();
-        $query = $con->prepare("SELECT * FROM `".self::$table."` WHERE id = $last");
+        $query = $con->prepare("SELECT * FROM `".$table."` WHERE id = $last");
         $query->execute();
         $list = $query->fetch(PDO::FETCH_ASSOC);
         if($list){
@@ -136,6 +145,7 @@ class LiquidoORM extends DatabaseConnection{
         }
 
         $con = null;
+        $table = null;
     }
 
 }

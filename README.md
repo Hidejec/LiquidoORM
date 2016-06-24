@@ -53,6 +53,7 @@ Create a model and extend the LiquidoORM. For example a Customer Model
 The Model automatically set the table with the plural name of the Model so you don't have to write again and again the table you want to run the query. 
 > In our example, The table is set to `customers`. So be sure that you have a table named `customers` inside your database. 
 > Another example: if you have a model class name ``Product``, the table will be set to `products` automatically. 
+> Another example: Class Name `Illness` = `illnesses`.
 
 If you want to specify custom table name, just add this inside your model: 
 ```bash

@@ -68,16 +68,16 @@ protected static $table = "tablename";
  $list = Customer::all();
 ```
 Simple right ? :) 
-It returns an array of results which you can manipulate using inside a loop.
+It returns an array of results which you can manipulate inside a loop.
 
 ###### Example if you are using a twig view
 
 ```bash
-  {% for customer in list %}
-		{{ customer.Email|e }}
-		#or 
-		{{ customer["Email"] }}
-	{% endfor %}
+{% for customer in list %}
+	{{ customer.Email|e }}
+	#or 
+	{{ customer["Email"] }}
+{% endfor %}
 ```
 
 **Get a single result passing a primary key ID**
